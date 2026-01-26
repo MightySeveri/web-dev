@@ -1,46 +1,25 @@
-set -euo pipefail
+# Get all pets
+curl http://127.0.0.1:4000/pets
 
-BASE_URL="http://127.0.0.1:4000"
-
-echo "== GET /pets (initial) =="
-curl -sS "$BASE_URL/pets"
-echo -e "\n"
-
-echo "== POST /pets (create) =="
-CREATE_RES="$(curl -sS -X POST "$BASE_URL/pets" \
+# Create a pet
+curl -X POST http://127.0.0.1:4000/pets \
   -H "Content-Type: application/json" \
-  -d '{"name":"Buddy","species":"Dog","age":1,"color":"Brown","weight":2}')"
-echo "$CREATE_RES"
-echo -e "\n"
+  -d '{
+  "name": "Buddy",
+  "species": "Dog",
+  "age": 1
+}'
 
-# Extract petId from the response (tries common keys: id, petId)
-PET_ID="$(printf '%s' "$CREATE_RES" | node -e '
-const fs=require("fs");
-const s=fs.readFileSync(0,"utf8").trim();
-let o={};
-try { o=JSON.parse(s); } catch(e) { process.exit(1); }
-const id = o.petId ?? o.id;
-if (!id) process.exit(2);
-process.stdout.write(String(id));
-')"
+# Get pet by ID
+curl http://127.0.0.1:4000/pets/1
 
-echo "Created petId: $PET_ID"
-echo
-
-echo "== GET /pets/$PET_ID =="
-curl -sS "$BASE_URL/pets/$PET_ID"
-echo -e "\n"
-
-echo "== PUT /pets/$PET_ID (update weight -> 14) =="
-curl -sS -X PUT "$BASE_URL/pets/$PET_ID" \
+# Update pet
+curl -X PUT http://127.0.0.1:4000/pets/1 \
   -H "Content-Type: application/json" \
-  -d '{"weight":14}'
-echo -e "\n"
+  -d '{
+  "species": "Dog",
+  "age": 2
+}'
 
-echo "== DELETE /pets/$PET_ID =="
-curl -sS -X DELETE "$BASE_URL/pets/$PET_ID"
-echo -e "\n"
-
-echo "== GET /pets (final) =="
-curl -sS "$BASE_URL/pets"
-echo -e "\n"
+# Delete pet
+curl -X DELETE http://127.0.0.1:4000/pets/1
