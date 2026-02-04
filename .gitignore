@@ -1,0 +1,11 @@
+# MongoDB local installs and data
+mongodb/
+mongodb-4.4/
+mongosh/
+mongodb-data/
+mongodb-data-4.4/
+
+# MongoDB logs and pid files
+mongodb*.log
+mongodb*.log.*
+mongodb*.pid
