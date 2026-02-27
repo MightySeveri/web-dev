@@ -2,7 +2,7 @@
     "mdb.presetConnections": [
         {
             "name": "Preset Connection",
-            "connectionString": "mongodb+srv://teveti:tnt939TNT!@cluster0.wax4hib.mongodb.net/"
+            "connectionString": "mongodb+srv://"username":"password"@cluster0.wax4hib.mongodb.net/"
         }
     ]
 }
