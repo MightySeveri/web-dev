@@ -1,0 +1,2 @@
+"why is it important to return a plain true/false from the initializer instead of returning the user object itself?"
+It matters because isAuthenticated is being used as a boolean flag, not as user data.
